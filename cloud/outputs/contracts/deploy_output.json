@@ -1,0 +1,22 @@
+{
+ "polygonZkEVMAddress": "0x59e399d3A225EEcC7aD9dde8a8ce461FD61D9Eec",
+ "polygonZkEVMBridgeAddress": "0x2bC38F4612761c18CaeA50Fc4E0A444f8fC12D83",
+ "polygonZkEVMGlobalExitRootAddress": "0x1918CfF9D60EDda0Ab48F4de10Ca756B8DE89484",
+ "maticTokenAddress": "0xE9F8D0ce7D1aBdd9fB9F34bcd1f94e1e9845eFBe",
+ "verifierAddress": "0x12C2807c5134d3CA608CedF16EC71C227804F887",
+ "zkEVMDeployerContract": "0xe15e4ed9a6fdeBd9Be90651D7e724Fefd7CcD61E",
+ "deployerAddress": "0xC4dc12Fa93C1349de1B0B168C643C230875BE6a0",
+ "timelockContractAddress": "0x395B9733Ba458F09478Ade81aA290B7eb40f33de",
+ "deploymentBlockNumber": 775285,
+ "genesisRoot": "0x076116f7547c1886557d6922f9b821c5c0a69983145c6dd692ff202784720079",
+ "trustedSequencer": "0x5F91CEb5601aC666238DB7dc0973E64F6AAC18C3",
+ "trustedSequencerURL": "https://jadefalcon-polygon-zkevm-rpc.alt.technology",
+ "chainID": 42069,
+ "networkName": "zkevm",
+ "admin": "0xC4dc12Fa93C1349de1B0B168C643C230875BE6a0",
+ "trustedAggregator": "0x855995bC8218d618ADaB6815a006C4347f6f09fC",
+ "proxyAdminAddress": "0x73a1d60Ad14512874078F506D863D62619F67a83",
+ "forkID": 5,
+ "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+ "version": "0.0.1"
+}
