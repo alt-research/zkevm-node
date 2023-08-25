@@ -338,7 +338,7 @@ services:
 
   zkevm-prover:
     container_name: zkevm-prover
-    image: hermeznetwork/zkevm-prover:v2.0.1-hotfix.1
+    image: hermeznetwork/zkevm-prover:v2.0.1
     ports:
       # - 50051:50051 # Prover
       - 50052:50052 # Mock prover
@@ -425,7 +425,7 @@ services:
 
   zkevm-permissionless-prover:
     container_name: zkevm-permissionless-prover
-    image: hermeznetwork/zkevm-prover:v2.0.1-hotfix.1
+    image: hermeznetwork/zkevm-prover:v2.0.1
     ports:
       # - 50058:50058 # Prover
       - 50059:50052 # Mock prover
@@ -461,3 +461,68 @@ services:
       - ./config/test.genesis.config.json:/app/genesis.json
     command:
       - "/bin/sh"
+
+  zkevm-bridge-db:
+    container_name: zkevm-bridge-db
+    image: postgres
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 1G
+    expose:
+      - 5438
+    ports:
+      - 5438:5432
+    environment:
+      - POSTGRES_USER=test_user
+      - POSTGRES_PASSWORD=test_password
+      - POSTGRES_DB=test_db
+    command: ["postgres", "-N", "500"]
+    
+  zkevm-bridge-service:
+    container_name: zkevm-bridge-service
+    image: zkevm-bridge-service
+    ports:
+      - 8080:8080
+      - 9090:9090
+    environment:
+      - ZKEVM_BRIDGE_DATABASE_USER=test_user
+      - ZKEVM_BRIDGE_DATABASE_PASSWORD=test_password
+      - ZKEVM_BRIDGE_DATABASE_NAME=test_db
+      - ZKEVM_BRIDGE_DATABASE_HOST=zkevm-bridge-db
+      - ZKEVM_BRIDGE_DATABASE_PORT=5432
+    volumes:
+      - ./test.keystore.claimtx:/pk/keystore.claimtxmanager
+      - ./config/test.node.config.toml:/app/config.toml
+    command:
+      - "/bin/sh"
+      - "-c"
+      - "/app/zkevm-bridge run --cfg /app/config.toml"
+      
+  zkevm-bridge-ui:
+    container_name: zkevm-bridge-ui
+    image: zkevm-bridge-ui
+    ports:
+      - 8081:80
+    environment:
+      - ETHEREUM_RPC_URL=http://34.210.76.86:8545/
+      - ETHEREUM_EXPLORER_URL=http://34.210.76.86:4000
+      - ETHEREUM_BRIDGE_CONTRACT_ADDRESS=0xff0EE8ea08cEf5cb4322777F5CC3E8A584B8A4A0
+      - ETHEREUM_FORCE_UPDATE_GLOBAL_EXIT_ROOT=true
+      - ETHEREUM_PROOF_OF_EFFICIENCY_CONTRACT_ADDRESS=0x610178dA211FEF7D417bC0e6FeD39F05609AD788
+      - POLYGON_ZK_EVM_RPC_URL=http://34.210.76.86:8123/
+      - POLYGON_ZK_EVM_EXPLORER_URL=http://34.210.76.86:4001
+      - POLYGON_ZK_EVM_BRIDGE_CONTRACT_ADDRESS=0xff0EE8ea08cEf5cb4322777F5CC3E8A584B8A4A0
+      - POLYGON_ZK_EVM_NETWORK_ID=1
+      - BRIDGE_API_URL=http://34.210.76.86:8080
+      - ENABLE_FIAT_EXCHANGE_RATES=false
+      - ENABLE_OUTDATED_NETWORK_MODAL=false
+      - ENABLE_DEPOSIT_WARNING=true
+      - ENABLE_REPORT_FORM=false
+    command:
+      - "/bin/sh"
+      - "-c"
+      - "/app/scripts/deploy.sh"
+    
