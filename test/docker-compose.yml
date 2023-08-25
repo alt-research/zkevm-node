@@ -483,7 +483,7 @@ services:
     
   zkevm-bridge-service:
     container_name: zkevm-bridge-service
-    image: zkevm-bridge-service
+    image: hermeznetwork/zkevm-bridge-service:v0.1.0
     ports:
       - 8080:8080
       - 9090:9090
@@ -503,7 +503,7 @@ services:
       
   zkevm-bridge-ui:
     container_name: zkevm-bridge-ui
-    image: zkevm-bridge-ui
+    image: hermeznetwork/zkevm-bridge-ui:latest
     ports:
       - 8081:80
     environment:
